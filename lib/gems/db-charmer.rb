@@ -5,9 +5,13 @@ module ActiveRecord
       # it leaves connection resolution to runtime rather than assigning an instance variable
       def relation_with_db_charmer(*args, &block)
         relation_without_db_charmer(*args, &block).tap do |rel|
-          base = self
-          rel.define_singleton_method(:db_charmer_connection) do
-            base.connection
+          begin
+            rel.db_charmer_connection = @connection
+          rescue StandardError => e
+            base = self
+            rel.define_singleton_method(:db_charmer_connection) do
+              base.connection
+            end
           end
           rel.db_charmer_enable_slaves = self.db_charmer_slaves.any?
           rel.db_charmer_connection_is_forced = !db_charmer_top_level_connection?
