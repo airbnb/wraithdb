@@ -19,7 +19,7 @@ module ActiveRecord
         establish_connection_without_activerecord_import(*args)
         begin
           ActiveSupport.run_load_hooks(:active_record_connection_established, connection)
-        rescue
+        rescue StandardError => e
           # ActiveImport will not work but this shouldn't be an issue as it's only used in Rake tasks.
           # If the DB is down we won't be importing anything in a rake task anyhow.
         end
@@ -31,7 +31,7 @@ module ActiveRecord
       def replace_bind_variables_with_wraithdb(statement, values)
         begin
           replace_bind_variables_without_wraithdb
-        rescue => e
+        rescue StandardError => e => e
           raise e if e.kind_of? PreparedStatementInvalid
           bound = values.dup
           statement.gsub('?') { quote_bound_value(bound.shift, WraithDB::Schema.connection) }
@@ -42,7 +42,7 @@ module ActiveRecord
       def table_exists_with_wraithdb_columns?
         begin
           table_exists_without_wraithdb_columns?
-        rescue
+        rescue StandardError => e
           WraithDB::Schema.tables.has_key?(table_name.to_s)
         end
       end
@@ -51,7 +51,7 @@ module ActiveRecord
       def columns_with_wraithdb_columns
         begin
           columns_without_wraithdb_columns
-        rescue
+        rescue StandardError => e
           columns = WraithDB::Schema.tables[table_name.to_s].columns
           return columns.map {|column|
             WraithDB::Column.new(column)

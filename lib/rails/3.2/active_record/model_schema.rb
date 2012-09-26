@@ -4,7 +4,7 @@ module ActiveRecord
       def table_exists_with_wraithdb_columns?
         begin
           table_exists_without_wraithdb_columns?
-        rescue
+        rescue StandardError => e
           WraithDB.schema.tables.has_key?(table_name.to_s)
         end
       end
@@ -13,7 +13,7 @@ module ActiveRecord
       def columns_with_wraithdb_columns
         begin
           columns_without_wraithdb_columns
-        rescue
+        rescue StandardError => e
           columns = WraithDB.schema.tables[table_name.to_s].columns
           return columns.map {|column|
             WraithDB::Column.new(column)

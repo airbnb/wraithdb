@@ -3,7 +3,7 @@ module Arel
     def columns_with_wraithdb
       begin
         columns_without_wraithdb
-      rescue
+      rescue StandardError => e
         attributes_for WraithDB::Schema.tables[@name].columns
       end
     end
@@ -13,7 +13,7 @@ module Arel
       def table_cache_with_wraithdb(engine)
         begin
           table_cache_without_wraithdb(engine)
-        rescue
+        rescue StandardError => e
           tables = {}
           WraithDB::Schema.tables.keys.each do |table_name|
             tables[table_name] = true
