@@ -5,7 +5,7 @@ module ActiveRecord
       #an actual connection. The implementation provided mirrors the Mysql2Adapter
       def replace_bind_variables_with_wraithdb(statement, values)
         begin
-          replace_bind_variables_without_wraithdb
+          replace_bind_variables_without_wraithdb(statement, values)
         rescue StandardError => e
           raise e if e.kind_of? PreparedStatementInvalid
           bound = values.dup
