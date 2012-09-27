@@ -10,14 +10,24 @@ module WraithDB
 
       def connection
         load
-        @connection ||= WraithDB::Adapter.new
+        @connection ||= build_connection
+      end
+
+      def build_connection
+        type = ActiveRecord::Base.configurations[Rails.env]['adapter']
+        type = 'default' unless File.exist?(adapter_path(type))
+
+        require adapter_path(type)
+
+        WraithDB::Adapters.const_get("#{type.capitalize}Adapter").new
+      end
+
+      def adapter_path(type)
+        "#{File.expand_path('..', __FILE__)}/adapters/#{type}_adapter.rb"
       end
 
       def tables
         connection.tables
-      end
-
-      def initialize(*args)
       end
 
       def load

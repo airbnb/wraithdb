@@ -2,7 +2,7 @@ require 'active_record/connection_adapters/abstract/schema_definitions'
 require "wraithdb/version"
 require 'wraithdb/schema'
 require 'wraithdb/column'
-require 'wraithdb/adapter'
+require 'wraithdb/adapters/wraith_functionality'
 
 dir_path = File.expand_path('..', __FILE__)
 
