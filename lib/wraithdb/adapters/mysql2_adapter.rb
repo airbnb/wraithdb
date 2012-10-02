@@ -22,6 +22,14 @@ module WraithDB
         s.gsub(/\\/, '\&\&').gsub(/'/, "\\\\'") # ' (for ruby-mode)
       end
 
+      def connect
+      end
+
+      def reconnect
+      end
+
+      def reconnect!
+      end
 
       def adapter_name
         'WraithMysql2'
