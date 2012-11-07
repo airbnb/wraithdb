@@ -1,6 +1,6 @@
 module WraithDB
   module Adapters
-    class Mysql2Adapter < ActiveRecord::ConnectionAdapters::AbstractAdapter
+    class Default < ActiveRecord::ConnectionAdapters::AbstractAdapter
       include WraithFunctionality
 
       def adapter_name
