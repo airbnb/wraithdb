@@ -10,6 +10,7 @@ module ActiveRecord
           # instance variable
           base = self
           rel = relation_without_db_charmer
+
           rel.define_singleton_method(:db_charmer_connection) do
             base.connection
           end

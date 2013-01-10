@@ -1,7 +1,11 @@
 module WraithDB
   module Adapters
-    class Default < ActiveRecord::ConnectionAdapters::AbstractAdapter
+    class DefaultAdapter < ActiveRecord::ConnectionAdapters::AbstractAdapter
       include WraithFunctionality
+
+      def override_connection?
+        true
+      end
 
       def adapter_name
         'WraithDefault'

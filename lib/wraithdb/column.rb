@@ -7,7 +7,7 @@ module WraithDB
       @limit     = column_definition.limit
       @precision = column_definition.precision
       @scale     = column_definition.scale
-      @type      = (column_definition.type == :primary_key) ? :integer : column_definition.type
+      @type      = (column_definition.type == :primary_key) ? :integer : column_definition.type.to_sym
       @default   = column_definition.default
       @primary   = column_definition.type == :primary_key
       @coder     = nil

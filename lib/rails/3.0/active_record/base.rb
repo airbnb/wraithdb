@@ -34,6 +34,15 @@ module ActiveRecord
         end
       end
       alias_method_chain :columns, :wraithdb_columns
+
+      def connection_with_wraithdb
+        if WraithDB::Schema.connection.override_connection?
+          WraithDB::Schema.connection
+        else
+          connection_without_wraithdb
+        end
+      end
+      alias_method_chain :connection, :wraithdb
     end
   end
 end
