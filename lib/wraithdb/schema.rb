@@ -9,8 +9,9 @@ module WraithDB
       end
 
       def connection
-        load
         @connection ||= build_connection
+        load
+        @connection
       end
 
       def build_connection
@@ -41,7 +42,6 @@ module WraithDB
         else
           raise StandardError.new("Invalid format for #{file}.")
         end
-
         instance_eval(source)
       end
     end
