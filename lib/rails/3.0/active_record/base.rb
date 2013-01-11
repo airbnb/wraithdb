@@ -34,6 +34,7 @@ module ActiveRecord
         end
       end
       alias_method_chain :columns, :wraithdb_columns
+
     end
   end
 end
