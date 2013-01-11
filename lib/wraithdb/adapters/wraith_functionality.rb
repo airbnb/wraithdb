@@ -12,10 +12,6 @@ module WraithDB
         true
       end
 
-      def override_connection?
-        false
-      end
-
       def create_table(table_name, options = {})
         table_definition = ActiveRecord::ConnectionAdapters::TableDefinition.new(self)
         table_definition.primary_key(options[:primary_key] || ActiveRecord::Base.get_primary_key(table_name.to_s.singularize)) unless options[:id] == false
