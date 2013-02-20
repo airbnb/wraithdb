@@ -34,7 +34,12 @@ module WraithDB
       def load
         return if @loaded
         @loaded = true
-        file = ENV['SCHEMA'] || "#{Rails.root}/db/schema.rb"
+        schema_locations = [
+          ENV["SCHEMA"],
+          "#{Rails.root}/db/#{Rails.env}_schema.rb",
+          "#{Rails.root}/db/schema.rb"
+        ]
+        file = schema_locations.find { |f| f.present? && File.exist?(f) }
         source = File.read(file)
         if (source =~ SCHEMA_REGEX && source =~ END_REGEX)
           source.sub!(SCHEMA_REGEX, "")
