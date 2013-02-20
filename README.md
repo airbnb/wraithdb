@@ -18,7 +18,10 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Wraith will load whichever of these files is found first:
+* SCHEMA environment variable (SCHEMA=/path/to/schema)
+* db/&lt;environment&gt;\_schema.rb (db/production_schema.rb)
+* db/schema.rb
 
 ## Contributing
 
